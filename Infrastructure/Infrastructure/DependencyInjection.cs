@@ -1,12 +1,12 @@
 ﻿using Infrastructure.DataAccessManager.EFCore;
 using Infrastructure.EmailManager;
+using Infrastructure.ETAReceiptManager;
 using Infrastructure.FileDocumentManager;
 using Infrastructure.FileImageManager;
 using Infrastructure.LogManager.Serilogs;
 using Infrastructure.SecurityManager.AspNetIdentity;
 using Infrastructure.SecurityManager.Tokens;
 using Infrastructure.SeedManager;
-using Infrastructure.ETAReceiptManager;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
