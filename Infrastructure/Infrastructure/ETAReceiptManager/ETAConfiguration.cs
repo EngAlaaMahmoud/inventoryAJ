@@ -39,4 +39,4 @@ public class ETAConfiguration
     /// ETA Invoicing Portal Base URL
     /// </summary>
     public string InvoicingPortalBaseUrl { get; set; } = string.Empty;
-} 
+}

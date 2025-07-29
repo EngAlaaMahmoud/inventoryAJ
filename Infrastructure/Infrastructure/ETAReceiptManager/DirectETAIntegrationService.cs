@@ -1,6 +1,6 @@
 using Application.Common.DTOs.ETAAuthentication;
-using Application.Common.DTOs.ETAReceiptSubmission;
 using Application.Common.DTOs.ETAReceiptDetails;
+using Application.Common.DTOs.ETAReceiptSubmission;
 using Application.Common.Services.ETAReceiptManager;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -28,7 +28,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
     {
         _httpClient = httpClient;
         _logger = logger;
-        _config = configuration.GetSection("ETAConfig").Get<ETAConfiguration>() 
+        _config = configuration.GetSection("ETAConfig").Get<ETAConfiguration>()
             ?? throw new InvalidOperationException("ETAConfig configuration section is missing");
 
         _jsonOptions = new JsonSerializerOptions
@@ -39,7 +39,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
     }
 
     public async Task<AuthenticateResponseDto> AuthenticateAsync(
-        AuthenticateRequestDto request, 
+        AuthenticateRequestDto request,
         AuthenticateHeadersDto headers)
     {
         try
@@ -68,7 +68,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
             httpRequest.Headers.Add("posmodelframework", headers.PosModelFramework);
             httpRequest.Headers.Add("presharedkey", headers.PresharedKey);
 
-            _logger.LogInformation("Sending authentication request to ETA Identity Service: {Url}", 
+            _logger.LogInformation("Sending authentication request to ETA Identity Service: {Url}",
                 _config.IdentityServiceUrl);
 
             var response = await _httpClient.SendAsync(httpRequest);
@@ -77,7 +77,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
             if (response.IsSuccessStatusCode)
             {
                 var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
-                
+
                 if (tokenResponse != null)
                 {
                     var authResponse = new AuthenticateResponseDto
@@ -88,14 +88,14 @@ public class DirectETAIntegrationService : IDirectETAIntegration
                         Scope = tokenResponse.GetValueOrDefault("scope")?.ToString()
                     };
 
-                    _logger.LogInformation("ETA authentication successful. Token expires in {ExpiresIn} seconds", 
+                    _logger.LogInformation("ETA authentication successful. Token expires in {ExpiresIn} seconds",
                         authResponse.ExpiresIn);
 
                     return authResponse;
                 }
             }
 
-            _logger.LogError("ETA authentication failed. Status: {Status}, Response: {Response}", 
+            _logger.LogError("ETA authentication failed. Status: {Status}, Response: {Response}",
                 response.StatusCode, responseContent);
 
             throw new HttpRequestException($"Authentication failed: {response.StatusCode} - {responseContent}");
@@ -108,7 +108,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
     }
 
     public async Task<SubmitReceiptResponseDto> SubmitReceiptAsync(
-        SubmitReceiptRequestDto request, 
+        SubmitReceiptRequestDto request,
         string accessToken)
     {
         try
@@ -118,7 +118,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
             var jsonContent = JsonSerializer.Serialize(request, _jsonOptions);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var httpRequest = new HttpRequestMessage(HttpMethod.Post, 
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post,
                 $"{_config.InvoicingServiceBaseUrl}/api/v1/receiptsubmissions")
             {
                 Content = content
@@ -136,13 +136,13 @@ public class DirectETAIntegrationService : IDirectETAIntegration
                 var submissionResponse = JsonSerializer.Deserialize<SubmitReceiptResponseDto>(
                     responseContent, _jsonOptions);
 
-                _logger.LogInformation("Receipt submission successful. Submission UUID: {SubmissionUUID}", 
+                _logger.LogInformation("Receipt submission successful. Submission UUID: {SubmissionUUID}",
                     submissionResponse?.SubmissionUUID);
 
                 return submissionResponse ?? new SubmitReceiptResponseDto();
             }
 
-            _logger.LogError("Receipt submission failed. Status: {Status}, Response: {Response}", 
+            _logger.LogError("Receipt submission failed. Status: {Status}, Response: {Response}",
                 response.StatusCode, responseContent);
 
             throw new HttpRequestException($"Receipt submission failed: {response.StatusCode} - {responseContent}");
@@ -155,7 +155,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
     }
 
     public async Task<GetReceiptDetailsResponseDto> GetReceiptDetailsAsync(
-        GetReceiptDetailsRequestDto request, 
+        GetReceiptDetailsRequestDto request,
         string accessToken)
     {
         try
@@ -187,7 +187,7 @@ public class DirectETAIntegrationService : IDirectETAIntegration
                 return receiptDetails ?? new GetReceiptDetailsResponseDto();
             }
 
-            _logger.LogError("Failed to get receipt details. Status: {Status}, Response: {Response}", 
+            _logger.LogError("Failed to get receipt details. Status: {Status}, Response: {Response}",
                 response.StatusCode, responseContent);
 
             throw new HttpRequestException($"Failed to get receipt details: {response.StatusCode} - {responseContent}");
@@ -198,4 +198,4 @@ public class DirectETAIntegrationService : IDirectETAIntegration
             throw;
         }
     }
-} 
+}
