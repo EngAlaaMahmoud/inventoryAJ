@@ -13,8 +13,10 @@ public class JsonStructureItem
     public string? URL { get; set; }
     public string? Name { get; set; }
     public bool IsModule { get; set; }
+    public bool IsActive { get; set; } = true;
     public List<JsonStructureItem> Children { get; set; } = new List<JsonStructureItem>();
 }
+
 
 public static class NavigationTreeStructure
 {
@@ -41,12 +43,15 @@ public static class NavigationTreeStructure
                 {
                     "URL": "/CustomerGroups/CustomerGroupList",
                     "Name": "Customer Group",
-                    "IsModule": false
-                },
+                    "IsModule": false,
+                    "IsActive": false
+                }
+                ,
                 {
                     "URL": "/CustomerCategories/CustomerCategoryList",
                     "Name": "Customer Category",
-                    "IsModule": false
+                    "IsModule": false,
+                     "IsActive": false
                 },
                 {
                     "URL": "/Customers/CustomerList",
@@ -284,6 +289,8 @@ public static class NavigationTreeStructure
             foreach (var item in menuItems)
             {
                 var nodeId = index.ToString();
+                if (item.GetType().GetProperty("IsActive")?.GetValue(item) is bool isActive && !isActive)
+                    continue;
                 if (item.IsModule)
                 {
                     nodes.Add(new MenuNavigationTreeNodeDto(nodeId, item.Name ?? "", param_hasChild: true, param_expanded: false));
