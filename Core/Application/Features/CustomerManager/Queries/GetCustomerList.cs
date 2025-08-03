@@ -40,15 +40,15 @@ public class GetCustomerListProfile : Profile
 {
     public GetCustomerListProfile()
     {
-        CreateMap<Customer, GetCustomerListDto>()
-            .ForMember(
-                dest => dest.CustomerGroupName,
-                opt => opt.MapFrom(src => src.CustomerGroup != null ? src.CustomerGroup.Name : string.Empty)
-            )
-            .ForMember(
-                dest => dest.CustomerCategoryName,
-                opt => opt.MapFrom(src => src.CustomerCategory != null ? src.CustomerCategory.Name : string.Empty)
-            );
+        //CreateMap<Customer, GetCustomerListDto>()
+        //    .ForMember(
+        //        dest => dest.CustomerGroupName,
+        //        opt => opt.MapFrom(src => src.CustomerGroup != null ? src.CustomerGroup.Name : string.Empty)
+        //    )
+        //    .ForMember(
+        //        dest => dest.CustomerCategoryName,
+        //        opt => opt.MapFrom(src => src.CustomerCategory != null ? src.CustomerCategory.Name : string.Empty)
+        //    );
 
     }
 }
@@ -81,8 +81,8 @@ public class GetCustomerListHandler : IRequestHandler<GetCustomerListRequest, Ge
             .Customer
             .AsNoTracking()
             .ApplyIsDeletedFilter(request.IsDeleted)
-            .Include(x => x.CustomerGroup)
-            .Include(x => x.CustomerCategory)
+            //.Include(x => x.CustomerGroup)
+            //.Include(x => x.CustomerCategory)
             .AsQueryable();
 
         var entities = await query.ToListAsync(cancellationToken);

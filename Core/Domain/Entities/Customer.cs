@@ -23,9 +23,9 @@ public class Customer : BaseEntity
     public string? Instagram { get; set; }
     public string? TwitterX { get; set; }
     public string? TikTok { get; set; }
-    public string? CustomerGroupId { get; set; }
-    public CustomerGroup? CustomerGroup { get; set; }
-    public string? CustomerCategoryId { get; set; }
-    public CustomerCategory? CustomerCategory { get; set; }
-    public ICollection<CustomerContact> CustomerContactList { get; set; } = new List<CustomerContact>();
+    //public string? CustomerGroupId { get; set; }
+    //public CustomerGroup? CustomerGroup { get; set; }
+    //public string? CustomerCategoryId { get; set; }
+    //public CustomerCategory? CustomerCategory { get; set; }
+    //public ICollection<CustomerContact> CustomerContactList { get; set; } = new List<CustomerContact>();
 }
