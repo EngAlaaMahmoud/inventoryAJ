@@ -68,8 +68,8 @@ public class CustomerSeeder
         foreach (var customer in customers)
         {
             customer.Number = _numberSequenceService.GenerateNumber(nameof(Customer), "", "CST");
-            customer.CustomerGroupId = GetRandomValue(groups, random);
-            customer.CustomerCategoryId = GetRandomValue(categories, random);
+           // customer.CustomerGroupId = GetRandomValue(groups, random);
+           // customer.CustomerCategoryId = GetRandomValue(categories, random);
             customer.City = GetRandomString(cities, random);
             customer.Street = GetRandomString(streets, random);
             customer.State = GetRandomString(states, random);

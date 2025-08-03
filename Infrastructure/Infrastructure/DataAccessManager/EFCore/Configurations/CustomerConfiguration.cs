@@ -29,8 +29,8 @@ public class CustomerConfiguration : BaseEntityConfiguration<Customer>
         builder.Property(x => x.Instagram).HasMaxLength(NameConsts.MaxLength).IsRequired(false);
         builder.Property(x => x.TwitterX).HasMaxLength(NameConsts.MaxLength).IsRequired(false);
         builder.Property(x => x.TikTok).HasMaxLength(NameConsts.MaxLength).IsRequired(false);
-        builder.Property(x => x.CustomerGroupId).HasMaxLength(IdConsts.MaxLength).IsRequired(false);
-        builder.Property(x => x.CustomerCategoryId).HasMaxLength(IdConsts.MaxLength).IsRequired(false);
+     //   builder.Property(x => x.CustomerGroupId).HasMaxLength(IdConsts.MaxLength).IsRequired(false);
+      //  builder.Property(x => x.CustomerCategoryId).HasMaxLength(IdConsts.MaxLength).IsRequired(false);
 
         builder.HasIndex(e => e.Name);
         builder.HasIndex(e => e.Number);

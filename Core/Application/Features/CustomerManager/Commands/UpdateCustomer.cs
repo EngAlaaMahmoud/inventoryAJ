@@ -96,8 +96,8 @@ public class UpdateCustomerHandler : IRequestHandler<UpdateCustomerRequest, Upda
         entity.Instagram = request.Instagram;
         entity.TwitterX = request.TwitterX;
         entity.TikTok = request.TikTok;
-        entity.CustomerGroupId = request.CustomerGroupId;
-        entity.CustomerCategoryId = request.CustomerCategoryId;
+        //entity.CustomerGroupId = request.CustomerGroupId;
+        //entity.CustomerCategoryId = request.CustomerCategoryId;
 
         _repository.Update(entity);
         await _unitOfWork.SaveAsync(cancellationToken);

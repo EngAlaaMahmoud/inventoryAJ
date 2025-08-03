@@ -40,14 +40,14 @@ public class CreateCustomerValidator : AbstractValidator<CreateCustomerRequest>
     public CreateCustomerValidator()
     {
         RuleFor(x => x.Name).NotEmpty();
-        RuleFor(x => x.Street).NotEmpty();
-        RuleFor(x => x.City).NotEmpty();
-        RuleFor(x => x.State).NotEmpty();
-        RuleFor(x => x.ZipCode).NotEmpty();
+        //RuleFor(x => x.Street).NotEmpty();
+        //RuleFor(x => x.City).NotEmpty();
+        //RuleFor(x => x.State).NotEmpty();
+        //RuleFor(x => x.ZipCode).NotEmpty();
         RuleFor(x => x.PhoneNumber).NotEmpty();
-        RuleFor(x => x.EmailAddress).NotEmpty();
-        RuleFor(x => x.CustomerGroupId).NotEmpty();
-        RuleFor(x => x.CustomerCategoryId).NotEmpty();
+        //RuleFor(x => x.EmailAddress).NotEmpty();
+        //RuleFor(x => x.CustomerGroupId).NotEmpty();
+        //RuleFor(x => x.CustomerCategoryId).NotEmpty();
     }
 }
 
@@ -91,8 +91,8 @@ public class CreateCustomerHandler : IRequestHandler<CreateCustomerRequest, Crea
         entity.Instagram = request.Instagram;
         entity.TwitterX = request.TwitterX;
         entity.TikTok = request.TikTok;
-        entity.CustomerGroupId = request.CustomerGroupId;
-        entity.CustomerCategoryId = request.CustomerCategoryId;
+        //entity.CustomerGroupId = request.CustomerGroupId;
+        //entity.CustomerCategoryId = request.CustomerCategoryId;
 
         await _repository.CreateAsync(entity, cancellationToken);
         await _unitOfWork.SaveAsync(cancellationToken);
