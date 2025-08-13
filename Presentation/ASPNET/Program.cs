@@ -12,6 +12,9 @@ if (!Directory.Exists(logPath))
     Directory.CreateDirectory(logPath);
 }
 
+
+
+
 builder.Services.AddBackEndServices(builder.Configuration);
 builder.Services.AddFrontEndServices();
 
